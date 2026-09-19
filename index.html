@@ -231,16 +231,12 @@ nav.main-nav a:hover{opacity:1;}
 /* reviews */
 .reviews-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
 .review-card{
-  background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px;
+  background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:10px;
 }
-.review-top{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
-.avatar{
-  width:40px; height:40px; border-radius:50%; background:var(--yellow); color:#141311;
-  display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px;
+.review-media{
+  width:100%; height:220px; object-fit:cover; border-radius:12px;
+  border:1px solid var(--line); background:#0f0d0b; display:block;
 }
-.review-name{font-weight:700; font-size:14.5px;}
-.stars{color:var(--yellow); font-size:13px; letter-spacing:1px;}
-.review-text{font-size:13.5px; color:var(--muted); margin-top:6px;}
 
 /* footer */
 footer{
@@ -429,7 +425,7 @@ footer{
     <div class="contact-phones">
       <a href="tel:01062305047">📞 01062305047</a>
       <a href="tel:01105448254">📞 01105448254</a>
-      <a href="https://wa.me/201129873740" target="_blank" rel="noopener">💬 01129873740</a>
+      <a href="https://wa.me/201062305047" target="_blank" rel="noopener">💬 01062305047</a>
     </div>
     <button class="order-btn" onclick="openCart()">🛒 اطلب الآن</button>
   </div>
@@ -466,7 +462,7 @@ footer{
     <div class="footer-phones">
       <span>📞 01062305047</span>
       <span>📞 01105448254</span>
-      <span>💬 01129873740</span>
+      <span>💬 01062305047</span>
     </div>
     <div class="footer-slogan">Good Food • Good Mood ♥</div>
   </div>
@@ -476,7 +472,7 @@ footer{
   🛒 السلة <span class="fab-count" id="fabCount">0</span>
 </button>
 
-<a class="fab-whatsapp" href="https://wa.me/201129873740?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D8%A7%D8%B3%D8%AA%D9%8A%D9%84%D9%88%20%F0%9F%91%8B%20%D8%B9%D8%A7%D9%88%D8%B2%20%D8%A7%D8%B7%D9%84%D8%A8" target="_blank" rel="noopener noreferrer" aria-label="تواصل عبر واتساب">💬</a>
+<a class="fab-whatsapp" href="https://wa.me/201062305047?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%83%D8%A7%D8%B3%D8%AA%D9%8A%D9%84%D9%88%20%F0%9F%91%8B%20%D8%B9%D8%A7%D9%88%D8%B2%20%D8%A7%D8%B7%D9%84%D8%A8" target="_blank" rel="noopener noreferrer" aria-label="تواصل عبر واتساب">💬</a>
 
 <div class="modal-overlay" id="cartOverlay" onclick="if(event.target===this) closeCart()">
   <div class="modal">
@@ -493,8 +489,8 @@ footer{
       <input type="text" id="custAddress" placeholder="المنطقة / الشارع / علامة مميزة">
     </div>
     <div class="field">
-      <label>رقم الموبايل (اختياري)</label>
-      <input type="tel" id="custPhone" placeholder="01xxxxxxxxx">
+      <label>رقم الواتساب</label>
+      <input type="tel" id="custPhone" placeholder="01xxxxxxxxx" required>
     </div>
     <div class="field">
       <label>أصناف الطلب</label>
@@ -520,13 +516,414 @@ footer{
 <div class="toast" id="toast"></div>
 
 <script>
-const CATEGORIES = [{"id": "casteilo-mix", "title": "ميكس كاستيلو", "icon": "🍽️", "cols": ["L", "M"], "items": [["كريسبي مع لحم مدخن", 110, 100], ["بيتزا مع سجق دوج", 115, 95], ["بانيه مع مربى وتوست", 125, 110], ["ميكس فراخ وكورن بلو", 125, 110]]}, {"id": "casteilo-heroes", "title": "أبطال كاستيلو", "icon": "🥪", "cols": ["L", "M"], "items": [["ميكس ديل", 135, 120], ["سوبر كاستيلو", 115, 100], ["كريسبي هلا", 120, 105], ["كريسبي أطلانتي", 115, 100], ["سوبر أطباق", 115, 100]]}, {"id": "waffle", "title": "وافل", "icon": "🧇", "cols": ["السعر"], "items": [["شوكولاتة", 100], ["عسل", 90], ["فراولة", 95], ["نوتيلا", 105], ["لوتس", 110]]}, {"id": "crepe-sweet-roll", "title": "كريب حلو رول", "icon": "🌯", "cols": ["السعر"], "items": [["شطة وعسل", 80], ["لوتس أصلي", 85], ["نوتيلا وبندق", 90], ["شوكولاتة وبندق", 85], ["حادق", 80]]}, {"id": "sory-casteilo", "title": "سوري كاستيلو", "icon": "🍢", "cols": ["السعر"], "items": [["شيش طاووق", 85], ["بطاطس", 85], ["تجن", 75], ["كبدة", 85], ["شاورما فراخ", 85], ["سجق", 65], ["فتلة", 65], ["هوت دوج", 65]]}, {"id": "macarona", "title": "مكرونات", "icon": "🍝", "cols": ["L", "M"], "items": [["بشاميل", 90, 80], ["بولونيز", 95, 90], ["الفريدو", 100, 95], ["سي فود", 135, 90], ["جمبري", 100, 95], ["شاورما", 100, 95], ["سوبريم", 95, 90], ["نابولي", 100, 90], ["كاسترد", 235, 175]]}, {"id": "fries-chicken", "title": "بطاطس وتشيكن", "icon": "🍟", "cols": ["السعر"], "items": [["بطاطس سادة", 80], ["شيش طاووق", 100], ["شاورما", 95], ["سوبريم", 135], ["ميكس بطاطس", 100]]}, {"id": "trays", "title": "صواني كاستيلو", "icon": "🍱", "cols": ["السعر"], "items": [], "needs_review": true}, {"id": "crepe-chicken", "title": "كريب فراخ كاستيلو", "icon": "🍗", "cols": ["السعر"], "items": [["فراخ وسمك مدخن", 110], ["كريسبي", 95], ["كباب فراخ", 110], ["هوت شيكن فراخ", 115], ["بانيه فراخ", 110], ["صدور فراخ تشرش", 105], ["أستريس", 105], ["كلوفير", 105]]}, {"id": "crepe-meat", "title": "كريب لحم كاستيلو", "icon": "🥩", "cols": ["السعر"], "items": [["سجق فراخ", 95], ["لحم مشوي", 140], ["شاورما", 90], ["كباب حلة", 95]]}, {"id": "crepe-cheese", "title": "كريب الجبن", "icon": "🧀", "cols": ["السعر"], "items": [["روزيتو", 70], ["كيري وموزاريلا", 90]]}, {"id": "extras-main", "title": "الإضافات", "icon": "➕", "cols": ["السعر"], "items": [["إضافة سجق", 35], ["إضافة لحم", 35], ["إضافة فراخ", 30], ["إضافة جبنة", 35]]}, {"id": "burger", "title": "برجر كاستيلو", "icon": "🍔", "cols": ["السعر"], "items": [["برجر فراخ", 130], ["برجر لحم كاستيلو", 180]]}, {"id": "hawawshy", "title": "حواوشي", "icon": "🥙", "cols": ["السعر"], "items": [["حواوشي فراخ", 70], ["حواوشي لحم", 90]]}, {"id": "sweets-casteilo", "title": "حلو كاستيلو", "icon": "🍰", "cols": ["السعر"], "items": [["بان كيك شوكولاتة", 40], ["بان كيك وايت شوكولاتة", 40]]}, {"id": "pastry-savory", "title": "فطائر حادق", "icon": "🥟", "cols": ["L", "M"], "items": [["جبنة", 180, 160], ["رومي", 180, 155], ["خضروات", 180, 155], ["سجق صوابع", 225, 195], ["هوت دوج", 200, 165], ["شاورما فراخ", 220, 195], ["سبروتة", 195, 195], ["تركي", 195, 175], ["سلامي", 200, 175], ["مكس جبن", 305, 215], ["مكس لحوم", 205, 205], ["مكس فراخ", 305, 265], ["جبنة وبسطرمة", 225, 205], ["سوبر سوبريم", 225, 195], ["شاورما لحم", 245, 205], ["فتلة", 280, 250], ["كيري لحم", 265, 225], ["شيش طاووق", 245, 225], ["سجق كيري", 255, 235], ["تشيكن رانش", 235, 225], ["بسطرمة وكيري", 250, 230]]}, {"id": "pastry-sweet", "title": "فطائر حلو", "icon": "🍫", "cols": ["L", "M"], "items": [["شيكولاتة", 130, 100], ["مكسرات", 120, 95], ["موز", 115, 80], ["كريمة", 85, 80], ["بندق", 75, 60], ["سكر", 130, 105], ["كنافة", 165, 140], ["سوبر وبسطرمة", 210, null]]}, {"id": "pizza-italian", "title": "بيتزا إيطالي كاستيلو", "icon": "🍕", "cols": ["L", "M", "S"], "items": [["مارجريتا", 225, 195, 110], ["خضروات", 170, 150, 130], ["ميكس", 185, 165, 140], ["دجاج", 195, 175, 155], ["سوسيس", 205, 185, 165], ["لحوم", 205, 190, 175], ["ميكس فراخ", 225, 195, 180], ["كاستيلو سبيشيال", 250, 225, 205]], "note": "يوجد حشو أطراف: جبن أو لحوم (50-60 جنيه)"}, {"id": "pizza-mix", "title": "بيتزا ميكسات", "icon": "🍕", "cols": ["L", "M", "S"], "items": [["سجق وبسطرمة", 220, 195, 175], ["سوبريم", 210, 195, 170], ["تركي مدخن", 190, 170, 160], ["شاورما لحم", 200, 190, 175], ["كاستيلو سبيشيال", 235, 220, 195]], "note": "يوجد حشو أطراف: جبن أو لحوم (50-60 جنيه)"}, {"id": "sawareekh", "title": "صواريخ", "icon": "🚀", "cols": ["L", "M"], "items": [["جبنة", 140, 120], ["روزي", 140, 125], ["خضروات", 140, 125], ["شاورما", 150, 140], ["سجق شرقي", 180, 150], ["شاورما فراخ", 180, 150], ["لحمة", 210, 180]]}, {"id": "sweet-extras", "title": "إضافات الحلو", "icon": "🍬", "cols": ["السعر"], "items": [["مكسرات", 30], ["تويكيز", 25], ["موز", 20], ["كيت كات", 30], ["شوكولاتة", 40]]}];
-const REVIEWS = [{"name": "أحمد محمد", "stars": 4, "text": "الطعم تحفة جدا والخدمة سريعة جدا هكرر الطلب أكيد"}, {"name": "سارة علي", "stars": 5, "text": "أكل لذيذ وأسعار مناسبة والجودة عالية من أفضل الأماكن اللي جربتها"}, {"name": "عمر حسن", "stars": 4, "text": "البيتزا عندهم غير شكل والحواشي رهيب بعد أنسج فيه"}, {"name": "نور طارق", "stars": 5, "text": "المكرونات و الكريب ممتازين والتوصيل كان سريع"}];
+const REVIEWS = [
+  { image: "assets/rate-1.jpeg" },
+  { image: "assets/rate-2.jpeg" },
+  { image: "assets/rate-3.jpeg" },
+  { image: "assets/rate-4.jpeg" },
+  { image: "assets/rate-5.jpeg" },
+  { image: "assets/rate-6.jpeg" }
+];
 const WA_NUMBER = "201062305047";
 function scrollToMenu(){ document.getElementById("menu").scrollIntoView({behavior:"smooth", block:"start"}); }
+const CATEGORIES = [
+  {
+    "id": "casteilo-mix",
+    "title": "ميكس كاستيلو",
+    "icon": "🍽️",
+    "cols": ["السعر"],
+    "items": [
+      ["كريسبي + هوت دوج", 110],
+      ["بانيه + ناجتس", 110],
+      ["استريبس + شيش", 125],
+      ["شيكن + كوردن بلو", 125],
+      ["بانيه على برجر", 140],
+      ["بانيه على كفتة لحم", 105],
+      ["بانيه على سجق", 110],
+      ["بانيه على بطاطس", 75],
+      ["ميكس فراخ", 125],
+      ["ميكس لحوم", 115]
+    ]
+  },
+  {
+    "id": "casteilo-heroes",
+    "title": "أبطال كاستيلو",
+    "icon": "🥪",
+    "cols": ["السعر"],
+    "items": [
+      ["كريب كاستيلو", 130],
+      ["كريب شيكولاته", 115],
+      ["كريب أفتار", 120],
+      ["سيمبا أطفال", 115],
+      ["كريب جريتوف", 120],
+      ["ميكس جريل", 135],
+      ["سوبر كاستيلو", 105],
+      ["كريب قشطة", 120],
+      ["كريب الهضبة", 130]
+    ],
+    "note": "وش كونو 40 جنية"
+  },
+  {
+    "id": "waffle",
+    "title": "وافل",
+    "icon": "🧇",
+    "cols": ["السعر"],
+    "items": [
+      ["وافل شوكولت", 60],
+      ["وافل وايت", 60],
+      ["وافل لوتس", 80],
+      ["وافل نوتيلا", 80],
+      ["وافل شوكولت + وايت", 80],
+      ["وافل نوتيلا + لوتس", 90],
+      ["وافل ميكس وايت + شوكولت", 85]
+    ]
+  },
+  {
+    "id": "crepe-sweet-roll",
+    "title": "كريب حلو رول",
+    "icon": "🌯",
+    "cols": ["السعر"],
+    "items": [
+      ["قشطة وعسل", 60],
+      ["شوكولت", 60],
+      ["نوتيلا أصليه", 85],
+      ["شوكولت + وايت", 80],
+      ["نوتيلا + لوتس", 90],
+      ["لوتس", 80]
+    ]
+  },
+  {
+    "id": "sory-casteilo",
+    "title": "سوري كاستيلو",
+    "icon": "🍢",
+    "cols": ["السعر"],
+    "items": [
+      ["شيش طاووق", 85],
+      ["كوردن بلو", 75],
+      ["سوبر كرانشي", 75],
+      ["شاورما فراخ", 85],
+      ["شاورما لحم", 90],
+      ["كفتة", 65],
+      ["سجق", 60],
+      ["بطاطس", 50],
+      ["زنجر", 70],
+      ["كريسبي", 60],
+      ["ناجتس", 60],
+      ["هوت دوج", 60]
+    ]
+  },
+  {
+    "id": "sowabe3-casteilo",
+    "title": "صوابع كاستيلو",
+    "icon": "🍟",
+    "cols": ["السعر"],
+    "items": [
+      ["كريب بطاطس", 60],
+      ["باكت بطاطس جامبو", 45]
+    ]
+  },
+  {
+    "id": "macarona",
+    "title": "مكرونات",
+    "icon": "🍝",
+    "cols": ["السعر"],
+    "items": [
+      ["باستا جبنة", 80],
+      ["باستا فراخ", 100],
+      ["باستا سجق", 95],
+      ["باستا جمبري", 135],
+      ["باستا استريبس", 100],
+      ["باستا نابولي", 100]
+    ]
+  },
+  {
+    "id": "fries-chicken",
+    "title": "بطاطس & تشيكن",
+    "icon": "🍟",
+    "cols": ["السعر"],
+    "items": [
+      ["بطاطس + استريبس", 80],
+      ["بطاطس + شيش", 100],
+      ["بطاطس + شاورما", 95],
+      ["بطاطس + سوسيس", 135],
+      ["بطاطس + برجر", 100],
+      ["بطاطس + تركي", 100],
+      ["بطاطس + كوردن بلو", 100]
+    ]
+  },
+  {
+    "id": "crepe-chicken",
+    "title": "كريب فراخ كاستيلو",
+    "icon": "🍗",
+    "cols": ["السعر"],
+    "items": [
+      ["ناجتس", 95],
+      ["كريسبي", 90],
+      ["كوردن بلو + رومي مدخن", 110],
+      ["استريبس", 110],
+      ["كابوتشا", 105],
+      ["زنجر + رومي مدخن", 110],
+      ["شيش طاووق", 115],
+      ["شاورما فراخ", 110],
+      ["فاهيتا فراخ", 120],
+      ["سوبر كرانشي", 105],
+      ["كوردن بلو", 105]
+    ]
+  },
+  {
+    "id": "crepe-meat",
+    "title": "كريب لحم كاستيلو",
+    "icon": "🥩",
+    "cols": ["السعر"],
+    "items": [
+      ["سوسيس", 90],
+      ["كفتة لحم", 95],
+      ["برجر لحم", 95],
+      ["سجق شرقي", 95],
+      ["بسطرمة", 140],
+      ["شاورما لحم", 135]
+    ]
+  },
+  {
+    "id": "crepe-seafood",
+    "title": "كريب سي فود",
+    "icon": "🦐",
+    "cols": ["السعر"],
+    "items": [
+      ["تونة", 145],
+      ["جمبري", 180]
+    ]
+  },
+  {
+    "id": "crepe-cheese",
+    "title": "كريب الجبن",
+    "icon": "🧀",
+    "cols": ["السعر"],
+    "items": [
+      ["رومي", 70],
+      ["موزاريلا", 75],
+      ["كيري + موزاريلا", 85],
+      ["ميكس جبن + تركي", 90]
+    ]
+  },
+  {
+    "id": "extras-main",
+    "title": "الإضافات",
+    "icon": "➕",
+    "cols": ["السعر"],
+    "items": [
+      ["إضافة فراخ", 35],
+      ["إضافة لحم", 40],
+      ["إضافة جبن", 35],
+      ["مثلثات", 30],
+      ["إضافة صوابع موزاريلا", 20],
+      ["إضافة حلقات بصل", 15],
+      ["إضافة رانش", 45]
+    ]
+  },
+  {
+    "id": "burger",
+    "title": "برجر كاستيلو",
+    "icon": "🍔",
+    "cols": ["السعر"],
+    "items": [
+      ["برجر لحم", 130],
+      ["برجر لحم دبل", 180],
+      ["برجر فراخ", 120],
+      ["برجر لحم كلاسيك", 80]
+    ]
+  },
+  {
+    "id": "hawawshy",
+    "title": "حواوشي",
+    "icon": "🥙",
+    "cols": ["السعر"],
+    "items": [
+      ["حواوشي", 70],
+      ["حواوشي موزاريلا", 90],
+      ["حواوشي تركي موزاريلا", 110]
+    ]
+  },
+  {
+    "id": "sweets-casteilo",
+    "title": "حلو كاستيلو",
+    "icon": "🍰",
+    "cols": ["قطعة", "4 قطع"],
+    "items": [
+      ["بان كيك شوكلت", 12, 40],
+      ["بان كيك وايت شوكلت", 12, 40]
+    ]
+  },
+  {
+    "id": "pastry-savory",
+    "title": "فطائر حادق",
+    "icon": "🥟",
+    "cols": ["L", "M"],
+    "items": [
+      ["جبنة", 180, 160],
+      ["رومي", 180, 155],
+      ["خضراوات", 180, 155],
+      ["سجق صوابع", 225, 195],
+      ["هوت دوج", 200, 165],
+      ["شاورما فراخ", 205, 185],
+      ["بسطرمة", 220, 195],
+      ["تركي", 195, 175],
+      ["سلامي", 205, 175],
+      ["مكس جبن", 200, 175],
+      ["مكس لحوم", 255, 215],
+      ["مكس فراخ", 245, 205],
+      ["جمبري", 305, 265],
+      ["سجق و بسطرمة", 255, 205],
+      ["سوبر سوبريم", 225, 195],
+      ["تونة", 225, 175],
+      ["شاورما لحم", 270, 225],
+      ["قنبلة", 280, 250],
+      ["كيري لافل استرايك", 270, 230],
+      ["شيش طاووق", 245, 220],
+      ["سجق كيري", 265, 225],
+      ["سوبر كرانشي", 235, 205],
+      ["تشيكن رانش", 245, 215],
+      ["تشيكن باربيكيو", 235, 205],
+      ["سجق + بسطرمة كيري", 255, 230],
+      ["بسطرمة كيري", 250, 220],
+      ["بيج تيستي", 250, 215]
+    ]
+  },
+  {
+    "id": "pastry-sweet",
+    "title": "فطائر حلو",
+    "icon": "🍫",
+    "cols": ["L", "M"],
+    "items": [
+      ["شيكولاته", 130, 100],
+      ["قشطة", 120, 95],
+      ["موز", 115, 95],
+      ["كاستر", 95, 80],
+      ["بغاشة", 85, 60],
+      ["سكر", 75, 60],
+      ["كنافة", 130, 105],
+      ["بسبوسة", 130, 105],
+      ["مكس", 150, 120],
+      ["كاستيلو", 165, 140],
+      ["سطلانة", 210, null],
+      ["جلاكسي", 150, 125],
+      ["أوريو شيكولاته", 160, 140],
+      ["شيكولاته موز", 150, 115],
+      ["لوتيلا", 165, 140]
+    ]
+  },
+  {
+    "id": "sweet-extras",
+    "title": "إضافات الحلو",
+    "icon": "🍬",
+    "cols": ["السعر"],
+    "items": [
+      ["مكسرات", 30],
+      ["موز", 25],
+      ["كيت كات", 30],
+      ["شيكولاتة", 40],
+      ["أوريو", 20],
+      ["توينكيز", 20],
+      ["موزو", 30],
+      ["قشطة", 30]
+    ]
+  },
+  {
+    "id": "pizza-mix",
+    "title": "بيتزا ميكسات",
+    "icon": "🍕",
+    "cols": ["L", "M", "S"],
+    "items": [
+      ["سجق وبسطرمة", 220, 190, 155],
+      ["سوبر سوبريم", 210, 195, 155],
+      ["تركي مدخن", 190, 170, 135],
+      ["شاورما لحم", 230, 200, 160],
+      ["كاستيلو", 235, 205, 175]
+    ],
+    "note": "يوجد حشو أطراف: جبن - لحوم (50-60)"
+  },
+  {
+    "id": "sawareekh",
+    "title": "صواريخ",
+    "icon": "🚀",
+    "cols": ["السعر"],
+    "items": [
+      ["جبنة", 140],
+      ["رومي", 140],
+      ["خضراوات", 140],
+      ["سجق شرقي", 170],
+      ["هوت دوج", 150],
+      ["شاورما فراخ", 170],
+      ["بسطرمة", 180],
+      ["تركي", 160],
+      ["سلامي", 160],
+      ["كيري لافل", 210],
+      ["مكس جبن", 160],
+      ["مكس لحوم", 195],
+      ["مكس فراخ", 185],
+      ["جمبري", 250],
+      ["سجق و بسطرمة", 190],
+      ["سوبر سوبريم", 170],
+      ["تونة", 160],
+      ["شاورما لحم", 190],
+      ["تيستي برجر", 180],
+      ["قنبلة", 210]
+    ]
+  },
+  {
+    "id": "pizza-italian",
+    "title": "بيتزا إيطالي كاستيلو",
+    "icon": "🍕",
+    "cols": ["L", "M", "S"],
+    "items": [
+      ["مارجريتا", 140, 125, 110],
+      ["عشاق الجبن", 170, 150, 130],
+      ["خضراوات", 150, 130, 115],
+      ["سجق", 215, 175, 155],
+      ["سلامي", 185, 165, 135],
+      ["سوسيس", 195, 165, 135],
+      ["تشيكن باربيكيو", 205, 180, 150],
+      ["تشيكن رانش", 225, 190, 155],
+      ["بسطرمة", 205, 175, 145],
+      ["كريسبي", 185, 155, 125],
+      ["تونة", 185, 155, 130],
+      ["مكس فراخ", 215, 190, 150],
+      ["مكس لحوم", 225, 195, 160],
+      ["سي فود", 305, 255, 195],
+      ["شاورما فراخ", 205, 175, 155],
+      ["بيج تيستي", 220, 190, 150],
+      ["بيتزا شيش", 215, 185, 155],
+      ["بيتزا جمبري", 300, 250, 185]
+    ],
+    "note": "يوجد حشو أطراف: جبن - لحوم (50-60)"
+  }
+];
 
+const SECTION_GROUPS = [
+  { "id": "casteilo-mix", "title": "ميكس كاستيلو", "icon": "🍽️", "cats": ["casteilo-mix"] },
+  { "id": "casteilo-heroes", "title": "أبطال كاستيلو", "icon": "🥪", "cats": ["casteilo-heroes"] },
+  { "id": "waffle", "title": "وافل", "icon": "🧇", "cats": ["waffle"] },
+  { "id": "crepe-sweet-roll", "title": "كريب حلو رول", "icon": "🌯", "cats": ["crepe-sweet-roll"] },
+  { "id": "sory-casteilo", "title": "سوري كاستيلو", "icon": "🍢", "cats": ["sory-casteilo"] },
+  { "id": "sowabe3-casteilo", "title": "صوابع كاستيلو", "icon": "🍟", "cats": ["sowabe3-casteilo"] },
+  { "id": "macarona", "title": "مكرونات", "icon": "🍝", "cats": ["macarona"] },
+  { "id": "fries-chicken", "title": "بطاطس & تشيكن", "icon": "🍟", "cats": ["fries-chicken"] },
+  { "id": "crepe-chicken", "title": "كريب فراخ كاستيلو", "icon": "🍗", "cats": ["crepe-chicken"] },
+  { "id": "crepe-meat", "title": "كريب لحم كاستيلو", "icon": "🥩", "cats": ["crepe-meat"] },
+  { "id": "crepe-seafood", "title": "كريب سي فود", "icon": "🦐", "cats": ["crepe-seafood"] },
+  { "id": "crepe-cheese", "title": "كريب الجبن", "icon": "🧀", "cats": ["crepe-cheese"] },
+  { "id": "extras-main", "title": "الإضافات", "icon": "➕", "cats": ["extras-main"] },
+  { "id": "burger", "title": "برجر كاستيلو", "icon": "🍔", "cats": ["burger"] },
+  { "id": "hawawshy", "title": "حواوشي", "icon": "🥙", "cats": ["hawawshy"] },
+  { "id": "sweets-casteilo", "title": "حلو كاستيلو", "icon": "🍰", "cats": ["sweets-casteilo"] },
+  { "id": "pastry-savory", "title": "فطائر حادق", "icon": "🥟", "cats": ["pastry-savory"] },
+  { "id": "pastry-sweet", "title": "فطائر حلو", "icon": "🍫", "cats": ["pastry-sweet"] },
+  { "id": "sweet-extras", "title": "إضافات الحلو", "icon": "🍬", "cats": ["sweet-extras"] },
+  { "id": "pizza-mix", "title": "بيتزا ميكسات", "icon": "🍕", "cats": ["pizza-mix"] },
+  { "id": "sawareekh", "title": "صواريخ", "icon": "🚀", "cats": ["sawareekh"] },
+  { "id": "pizza-italian", "title": "بيتزا إيطالي كاستيلو", "icon": "🍕", "cats": ["pizza-italian"] }
+];
 /* ---- hand-drawn flat illustrations for the category cards ---- */
-const SECTION_GROUPS = [{"id": "casteilo-mix", "title": "ميكس كاستيلو", "icon": "🍽️", "cats": ["casteilo-mix"]}, {"id": "casteilo-heroes", "title": "أبطال كاستيلو", "icon": "🥪", "cats": ["casteilo-heroes"]}, {"id": "waffle", "title": "وافل", "icon": "🧇", "cats": ["waffle"]}, {"id": "crepe-sweet-roll", "title": "كريب حلو رول", "icon": "🌯", "cats": ["crepe-sweet-roll"]}, {"id": "sory-casteilo", "title": "سوري كاستيلو", "icon": "🍢", "cats": ["sory-casteilo"]}, {"id": "macarona", "title": "مكرونات", "icon": "🍝", "cats": ["macarona"]}, {"id": "fries-chicken", "title": "بطاطس وتشيكن", "icon": "🍟", "cats": ["fries-chicken"]}, {"id": "trays", "title": "صواني كاستيلو", "icon": "🍱", "cats": ["trays"]}, {"id": "crepe-chicken", "title": "كريب فراخ كاستيلو", "icon": "🍗", "cats": ["crepe-chicken"]}, {"id": "crepe-meat", "title": "كريب لحم كاستيلو", "icon": "🥩", "cats": ["crepe-meat"]}, {"id": "crepe-cheese", "title": "كريب الجبن", "icon": "🧀", "cats": ["crepe-cheese"]}, {"id": "extras-main", "title": "الإضافات", "icon": "➕", "cats": ["extras-main"]}, {"id": "burger", "title": "برجر كاستيلو", "icon": "🍔", "cats": ["burger"]}, {"id": "hawawshy", "title": "حواوشي", "icon": "🥙", "cats": ["hawawshy"]}, {"id": "sweets-casteilo", "title": "حلو كاستيلو", "icon": "🍰", "cats": ["sweets-casteilo"]}, {"id": "pastry-savory", "title": "فطائر حادق", "icon": "🥟", "cats": ["pastry-savory"]}, {"id": "pastry-sweet", "title": "فطائر حلو", "icon": "🍫", "cats": ["pastry-sweet"]}, {"id": "pizza-italian", "title": "بيتزا إيطالي كاستيلو", "icon": "🍕", "cats": ["pizza-italian"]}, {"id": "pizza-mix", "title": "بيتزا ميكسات", "icon": "🍕", "cats": ["pizza-mix"]}, {"id": "sawareekh", "title": "صواريخ", "icon": "🚀", "cats": ["sawareekh"]}, {"id": "sweet-extras", "title": "إضافات الحلو", "icon": "🍬", "cats": ["sweet-extras"]}];
 
 let cart = []; // {id, label, price, qty}
 let cartUid = 0;
@@ -631,18 +1028,10 @@ function escapeStr(s){ return s.replace(/'/g, "\\'"); }
 
 function renderReviews(){
   const grid = document.getElementById('reviewsGrid');
-  grid.innerHTML = REVIEWS.map(r=>{
-    const initial = r.name.trim().charAt(0);
-    const stars = "★".repeat(r.stars) + "☆".repeat(5-r.stars);
+  grid.innerHTML = REVIEWS.map(r => {
+    const imageUrl = r.image || 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80';
     return `<div class="review-card">
-      <div class="review-top">
-        <div class="avatar">${initial}</div>
-        <div>
-          <div class="review-name">${r.name}</div>
-          <div class="stars">${stars}</div>
-        </div>
-      </div>
-      <div class="review-text">${r.text}</div>
+      <img class="review-media" src="${imageUrl}" alt="review photo">
     </div>`;
   }).join('');
 }
@@ -741,6 +1130,7 @@ function sendOrder(e){
   const notes = document.getElementById('orderNotes').value.trim();
 
   if(!name){ showToast('من فضلك اكتب اسمك ✍️'); document.getElementById('custName').focus(); return false; }
+  if(!phone){ showToast('من فضلك اكتب رقم الواتساب 📲'); document.getElementById('custPhone').focus(); return false; }
   if(!cart.length && !notes){ showToast('اختار أصناف من المنيو أو اكتب طلبك في الملاحظات 🍔'); return false; }
   if(!address){ showToast('من فضلك اكتب العنوان 📍'); document.getElementById('custAddress').focus(); return false; }
 
@@ -760,8 +1150,8 @@ function sendOrder(e){
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   const btn = document.getElementById('sendBtn');
   btn.setAttribute('href', url);
-  // let the browser's native anchor navigation take over (target="_blank" rel="noopener")
-  return true;
+  window.open(url, '_blank', 'noopener,noreferrer');
+  return false;
 }
 
 renderSections();
